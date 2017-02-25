@@ -37,7 +37,7 @@ app.get('/oauth/linkedin/callback', function(req, res) {
 app.get('/oauth/linkedin/get-profile', function(req, res) {
 
 	const linkedin = Linkedin.init(req.query.access_token);
-	linkedin.people.url(req.query.url, ['picture-url','picture-urls::(original)'], function(err, $in) {
+	linkedin.people.url(req.query.url, ['picture-url','picture-urls::(original)','first-name','last-name','positions'], function(err, $in) {
 		if(err) return res.json(err)
 		res.json($in)
 	});

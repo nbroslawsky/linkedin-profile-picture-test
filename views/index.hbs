@@ -17,6 +17,8 @@
 <body>
 	<div class="profile-image" id="profile-image"></div>
 	<input type="text" name="linkedin-url" id="linkedin-url" onchange="updateProfileImage()" />
+	<pre id="profile-data">
+	</pre>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -29,6 +31,7 @@
 			url: '/oauth/linkedin/get-profile?url=' + encodeURIComponent(url) + '&access_token=' + encodeURIComponent(pageState.token),
 			'success': function(data, status, xhr) {
 				var pictureUrl = data && data.pictureUrl
+				document.getElementById('profile-data').innerHTML = JSON.stringify(data, undefined, 4);
 				if(!pictureUrl)
 					return alert('Could not pull profile picture')
 
