@@ -25,7 +25,6 @@
 		var url = document.getElementById('linkedin-url').value
 		if(!pageState.token) return fetchOauthToken()
 
-		console.log(pageState)
 		$.ajax({
 			url: '/oauth/linkedin/get-profile?url=' + encodeURIComponent(url) + '&access_token=' + encodeURIComponent(pageState.token),
 			'success': function(data, status, xhr) {
