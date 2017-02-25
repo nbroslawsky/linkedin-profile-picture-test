@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Testing</title>
+  <style>
+  	div.profile-image {
+  		border-radius:50%;
+  		background-color:#DEDEDE;
+  		width:100px;
+  		height:100px;
+  		background-size:100%;
+  		background-repeat:no-repeat;
+  	}
+  </style>
+</head>
+<body>
+	<div class="profile-image" id="profile-image"></div>
+	<input type="text" name="linkedin-url" id="linkedin-url" onchange="updateProfileImage()" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	var pageState = {};
+	function updateProfileImage() {
+		var url = document.getElementById('linkedin-url').value
+		if(!pageState.token) return fetchOauthToken()
+
+		console.log(pageState)
+		$.ajax({
+			url: '/oauth/linkedin/get-profile?url=' + encodeURIComponent(url) + '&access_token=' + encodeURIComponent(pageState.token),
+			'success': function(data, status, xhr) {
+				var pictureUrl = data && data.pictureUrl
+				if(!pictureUrl)
+					return alert('Could not pull profile picture')
+
+				var bestPicture = data.pictureUrls && data.pictureUrls.values && data.pictureUrls.values[0] || data.pictureUrl
+				document.getElementById('profile-image').style.backgroundImage = 'url("'+bestPicture+'")'
+			}
+		})
+
+	}
+
+	function fetchOauthToken(cb) {
+		window.open('/oauth/linkedin','_blank', 'width=300,height=600')
+	}
+	</script>
+</body>
+</html>

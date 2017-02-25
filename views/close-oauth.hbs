@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sweet. Linkedin Access Successful</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var opener = window.opener
+		if(opener) {
+			opener.pageState.token = '{{ access_token }}'
+			opener.updateProfileImage()
+		}
+		window.close()
+	</script>
+</body>
+</html>
